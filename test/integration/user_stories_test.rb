@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserStoriesTest < ActionDispatch::IntegrationTest
 	fixtures :products
-	include ActiveJob: :TestHelper
+	include ActiveJob::TestHelper
 
 	# A user goes to the index page. They select a product, adding it to their
     # cart, and check out, filling in their details on the checkout form. When
@@ -26,7 +26,7 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
 
 		get "/orders/new"
 		assert_response :success
-		assert_select 'legend', 'Please Enter Your Details'
+		assert_select 'legend', 'Legend'
 
 		perform_enqueued_jobs do
 			post "/orders", params: {
@@ -35,7 +35,7 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
 					address: "123 The Street",
 					email: "dave@example.com",
 					pay_type: "Check"
-				} 
+				}
 			}
 	
 			follow_redirect!
